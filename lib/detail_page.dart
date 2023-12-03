@@ -1,30 +1,40 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:list_kuliner/http_helper.dart';
 import 'package:list_kuliner/styles.dart';
+import 'package:list_kuliner/makanan.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 class DetailPage extends StatelessWidget {
-  final String nama;
-  final String detail;
-  final String deskripsi;
-  final String gambar;
-  final String waktubuka;
-  final String harga;
-  final String kalori;
-  final List<String> gambarlain;
-  final List<Map<String, String>> bahan;
-  const DetailPage(
-      {super.key,
-      required this.nama,
-      required this.detail,
-      required this.deskripsi,
-      required this.gambar,
-      required this.waktubuka,
-      required this.harga,
-      required this.kalori,
-      required this.gambarlain,
-      required this.bahan});
+  final Makanan makanan;
+
+  // final String nama;
+  // final String detail;
+  // final String deskripsi;
+  // final String gambar;
+  // final String waktubuka;
+  // final String harga;
+  // final String kalori;
+  // final List<String> gambarlain;
+  // final List<Map<String, String>> bahan;
+
+  HttpHelper api = HttpHelper();
+
+  DetailPage({super.key, required this.makanan, required this.api});
+
+  // DetailPage(
+  //     {super.key,
+  //     required this.nama,
+  //     required this.detail,
+  //     required this.deskripsi,
+  //     required this.gambar,
+  //     required this.waktubuka,
+  //     required this.harga,
+  //     required this.kalori,
+  //     required this.gambarlain,
+  //     required this.bahan,
+  //     required this.api});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +47,7 @@ class DetailPage extends StatelessWidget {
               Stack(
                 children: <Widget>[
                   CarouselSlider(
-                      items: gambarlain
+                      items: makanan.gambarlain
                           .asMap()
                           .entries
                           .map((item) => InkWell(
@@ -45,7 +55,7 @@ class DetailPage extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => GalleryWidget(
-                                              gambarlain: gambarlain,
+                                              gambarlain: makanan.gambarlain,
                                               index: item.key,
                                             ))),
                                 child: Container(
@@ -102,7 +112,7 @@ class DetailPage extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.only(top: 16.0),
                 child: Text(
-                  nama,
+                  makanan.nama,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                       fontSize: 30.0, fontWeight: FontWeight.bold),
@@ -121,7 +131,7 @@ class DetailPage extends StatelessWidget {
                           height: 8,
                         ),
                         Text(
-                          waktubuka,
+                          makanan.waktubuka,
                         ),
                       ],
                     ),
@@ -136,7 +146,7 @@ class DetailPage extends StatelessWidget {
                           height: 8,
                         ),
                         Text(
-                          kalori,
+                          makanan.kalori,
                         ),
                       ],
                     ),
@@ -147,7 +157,7 @@ class DetailPage extends StatelessWidget {
                           height: 8,
                         ),
                         Text(
-                          harga,
+                          makanan.harga,
                         ),
                       ],
                     ),
@@ -157,7 +167,7 @@ class DetailPage extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(16),
                 child: Text(
-                  deskripsi,
+                  makanan.deskripsi,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 16,
@@ -187,15 +197,16 @@ class DetailPage extends StatelessWidget {
                           ),
                           child: Column(
                             children: [
-                              Image.asset(bahan[index].values.first, width: 52),
-                              Text(bahan[index].keys.first),
+                              Image.asset(makanan.bahan[index].values.first,
+                                  width: 52),
+                              Text(makanan.bahan[index].keys.first),
                             ],
                           ),
                         ),
                     separatorBuilder: (_, index) => const SizedBox(
                           width: 15,
                         ),
-                    itemCount: bahan.length),
+                    itemCount: makanan.bahan.length),
               ),
               const SizedBox(
                 height: 50,

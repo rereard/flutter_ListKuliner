@@ -9,6 +9,21 @@ class Makanan {
   final List<String> gambarlain;
   final List<Map<String, String>> bahan;
 
+  factory Makanan.fromJson(Map<String, dynamic> json) {
+    return Makanan(
+      nama: json["nama"],
+      deskripsi: json["deskripsi"],
+      detail: json["detail"],
+      waktubuka: json["waktubuka"],
+      harga: json["harga"],
+      kalori: json["kalori"],
+      gambar: json["gambar"],
+      gambarlain: List<String>.from(json["gambarlain"]),
+      bahan: List<Map<String, String>>.from(json["bahan"].map(
+          (x) => Map.from(x).map((k, v) => MapEntry<String, String>(k, v)))),
+    );
+  }
+
   Makanan(
       {required this.nama,
       required this.harga,

@@ -1,27 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:list_kuliner/detail_page.dart';
+import 'package:list_kuliner/makanan.dart';
+import 'package:list_kuliner/http_helper.dart';
 
 class ListItem extends StatelessWidget {
-  final String nama;
-  final String detail;
-  final String deskripsi;
-  final String gambar;
-  final String waktubuka;
-  final String harga;
-  final String kalori;
-  final List<String> gambarlain;
-  final List<Map<String, String>> bahan;
-  const ListItem(
-      {super.key,
-      required this.nama,
-      required this.detail,
-      required this.deskripsi,
-      required this.gambar,
-      required this.waktubuka,
-      required this.harga,
-      required this.kalori,
-      required this.gambarlain,
-      required this.bahan});
+  HttpHelper api = HttpHelper();
+  final Makanan makanan;
+
+  ListItem({super.key, required this.makanan, required this.api});
+  // final String nama;
+  // final String detail;
+  // final String deskripsi;
+  // final String gambar;
+  // final String waktubuka;
+  // final String harga;
+  // final String kalori;
+  // final List<String> gambarlain;
+  // final List<Map<String, String>> bahan;
+  // const ListItem(
+  //     {super.key,
+  //     required this.nama,
+  //     required this.detail,
+  //     required this.deskripsi,
+  //     required this.gambar,
+  //     required this.waktubuka,
+  //     required this.harga,
+  //     required this.kalori,
+  //     required this.gambarlain,
+  //     required this.bahan});
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +36,8 @@ class ListItem extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (context) => DetailPage(
-                    nama: nama,
-                    gambar: gambar,
-                    kalori: kalori,
-                    deskripsi: deskripsi,
-                    waktubuka: waktubuka,
-                    detail: detail,
-                    harga: harga,
-                    gambarlain: gambarlain,
-                    bahan: bahan,
+                    makanan: makanan,
+                    api: api,
                   ))),
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 8),
@@ -63,8 +62,8 @@ class ListItem extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
-              child: Image.asset(
-                gambarlain[0],
+              child: Image.network(
+                api.url + makanan.gambarlain[0],
                 height: 75,
                 width: 90,
                 fit: BoxFit.cover,
@@ -78,18 +77,18 @@ class ListItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
-                  nama,
+                  makanan.nama,
                   style: const TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  deskripsi,
+                  makanan.deskripsi,
                   style: TextStyle(color: Colors.grey.shade600),
                 ),
                 Text(
-                  harga,
+                  makanan.harga,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 )
               ],
